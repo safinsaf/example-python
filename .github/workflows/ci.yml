@@ -23,7 +23,7 @@ jobs:
       - name: Debug
         run: ls -al .
       - name: Run tests and collect coverage
-        if: steps.copy.outputs.outcome != "success"
+        if: steps.copy.outputs.outcome != 'success'
         run: pytest --cov app
       - name: Debug
         run: ls -al .
