@@ -13,6 +13,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Copy a file from s3
+        id: copy
         uses: prewk/s3-cp-action@v2
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -22,6 +23,7 @@ jobs:
       - name: Debug
         run: ls -al .
       - name: Run tests and collect coverage
+        if: steps.copy.outputs.outcome != "success"
         run: pytest --cov app
       - name: Debug
         run: ls -al .
