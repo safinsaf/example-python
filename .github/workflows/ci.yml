@@ -15,6 +15,7 @@ jobs:
       - name: Copy a file from s3
         id: copy
         uses: prewk/s3-cp-action@v2
+        continue-on-error: true
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
