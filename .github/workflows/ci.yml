@@ -18,7 +18,7 @@ jobs:
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage.xml'
+          source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage1.xml'
           dest: 'coverage.xml'
       - name: Debug
         run: ls -al .
