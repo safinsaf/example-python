@@ -12,6 +12,11 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Copy dependencies
+        uses: theowenyoung/folder-hash@v2.0.1
+        with:
+          path: |
+            .
       - name: Copy a file from s3
         id: copy
         uses: prewk/s3-cp-action@v2
@@ -21,10 +26,15 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage1.xml'
           dest: 'coverage.xml'
+      - name: Check coverage file existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "coverage.xml"
       - name: Debug
         run: ls -al .
       - name: Run tests and collect coverage
-        if: steps.copy.outputs.output != 'success'
+        if: steps.check_files.outputs.files_exists == 'false'
         run: pytest --cov app
       - name: Debug
         run: ls -al .
