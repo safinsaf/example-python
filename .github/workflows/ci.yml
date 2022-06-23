@@ -12,7 +12,8 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Copy dependencies
+      - name: Find hash
+        id: hash
         uses: theowenyoung/folder-hash@v2.0.1
         with:
           path: |
@@ -24,7 +25,7 @@ jobs:
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage1.xml'
+          source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage-{{ steps.hash.outputs.hash }}.xml'
           dest: 'coverage.xml'
       - name: Check coverage file existence
         id: check_files
@@ -46,5 +47,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           source: 'coverage.xml'
-          dest: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage.xml'
+          dest: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage-{{ steps.hash.outputs.hash }}.xml'
 
