@@ -25,7 +25,7 @@ jobs:
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage-{{ steps.hash.outputs.hash }}.xml'
+          source: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage-${{ steps.hash.outputs.hash }}.xml'
           dest: 'coverage.xml'
       - name: Check coverage file existence
         id: check_files
@@ -47,5 +47,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           source: 'coverage.xml'
-          dest: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage-{{ steps.hash.outputs.hash }}.xml'
+          dest: 's3://infra-prod-docs/hyperledger/iroha2/codecov/coverage-${{ steps.hash.outputs.hash }}.xml'
 
